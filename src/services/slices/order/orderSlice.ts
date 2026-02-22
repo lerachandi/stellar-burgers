@@ -16,15 +16,15 @@ const initialState: TOrderState = {
 };
 
 export const createOrderThunk = createAsyncThunk<
-  TOrder, // return
-  string[], // arg
-  { rejectValue: string } // reject
+  TOrder,
+  string[],
+  { rejectValue: string }
 >('order/createOrder', async (ingredientIds, thunkApi) => {
   try {
     const res = await orderBurgerApi(ingredientIds);
     return res.order;
-  } catch (err: any) {
-    const message = err?.message;
+  } catch (err: unknown) {
+    const message = (err as { message?: string })?.message;
 
     if (message === 'jwt expired') {
       await thunkApi.dispatch(logoutThunk());

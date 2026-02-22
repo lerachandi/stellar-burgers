@@ -92,7 +92,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='Детали заказа' onClose={handleCloseModal}>
+              <Modal title='' onClose={handleCloseModal}>
                 <OrderInfo />
               </Modal>
             }
@@ -102,7 +102,7 @@ const App = () => {
             element={
               <ProtectedRoute
                 element={
-                  <Modal title='Детали заказа' onClose={handleCloseModal}>
+                  <Modal title='' onClose={handleCloseModal}>
                     <OrderInfo />
                   </Modal>
                 }

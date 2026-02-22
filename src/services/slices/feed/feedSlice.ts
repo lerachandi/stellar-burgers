@@ -30,7 +30,6 @@ const initialState: TFeedState = {
   error: null
 };
 
-// ВАЖНО: без condition и без аргументов
 export const fetchFeedsThunk = createAsyncThunk<TFeedsResponse>(
   'feed/fetchFeeds',
   async () => (await getFeedsApi()) as TFeedsResponse
@@ -74,7 +73,6 @@ export const {
   getFeedError
 } = feedSlice.selectors;
 
-// Если тебе удобнее доставать "объектом"
 const selectFeedSlice = (state: RootState) => state.feed;
 
 export const getFeedInfo = createSelector([selectFeedSlice], (feed) => ({

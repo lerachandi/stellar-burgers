@@ -28,7 +28,6 @@ export const Login: FC = () => {
 
     hasRedirected.current = true;
 
-    // если вдруг redirectTo совпал с текущим — всё равно отправляем на /
     const target = location.pathname === redirectTo ? '/' : redirectTo;
     navigate(target, { replace: true });
   }, [user, redirectTo, navigate, location.pathname]);

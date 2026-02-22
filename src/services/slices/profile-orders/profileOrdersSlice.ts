@@ -17,7 +17,6 @@ const initialState: TProfileOrdersState = {
 export const fetchProfileOrdersThunk = createAsyncThunk(
   'profileOrders/fetchProfileOrders',
   async () => {
-    // getOrdersApi уже возвращает массив orders
     const orders = await getOrdersApi();
     return orders;
   }
