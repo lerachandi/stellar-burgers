@@ -1,5 +1,9 @@
 export type FeedInfoUIProps = {
-  feed: any;
+  feed: {
+    total: number;
+    totalToday: number;
+    [key: string]: unknown;
+  };
   readyOrders: number[];
   pendingOrders: number[];
 };

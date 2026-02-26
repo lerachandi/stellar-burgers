@@ -1,8 +1,9 @@
 .wrap {
-  margin: 0 auto;
   width: 640px;
+  margin: 0 auto;
 }
 .number {
+  width: 100%;
   text-align: center;
 }
 
@@ -15,22 +16,22 @@
 }
 
 .img_wrap {
+  position: relative;
   width: 64px;
   height: 64px;
   border-radius: 50%;
   background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
-  position: relative;
 }
 
 .border {
+  position: absolute;
+  top: 2px;
+  left: 2px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #1c1c21;
-  position: absolute;
-  left: 2px;
-  top: 2px;
   text-align: center;
+  background-color: #1c1c21;
 }
 
 .img {
@@ -51,10 +52,10 @@
 }
 
 .list {
-  list-style: none;
+  max-height: 320px;
   padding: 0;
   overflow-y: auto;
-  max-height: 320px;
+  list-style: none;
 }
 
 .list::-webkit-scrollbar {
