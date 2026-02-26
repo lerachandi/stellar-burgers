@@ -89,21 +89,23 @@ const App = () => {
               </Modal>
             }
           />
+
           <Route
             path='/feed/:number'
             element={
               <Modal title='' onClose={handleCloseModal}>
-                <OrderInfo />
+                <OrderInfo isModal />
               </Modal>
             }
           />
+
           <Route
             path='/profile/orders/:number'
             element={
               <ProtectedRoute
                 element={
                   <Modal title='' onClose={handleCloseModal}>
-                    <OrderInfo />
+                    <OrderInfo isModal />
                   </Modal>
                 }
               />
