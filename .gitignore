@@ -4,3 +4,4 @@ node_modules
 dist
 __MACOSX
 .DS_Store
+coverage
