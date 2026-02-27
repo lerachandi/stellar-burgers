@@ -16,7 +16,7 @@ import {
   getOrderInfo
 } from '../../services/slices/order-info/orderInfoSlice';
 
-export const OrderInfo: FC = () => {
+export const OrderInfo: FC<{ isModal?: boolean }> = ({ isModal = false }) => {
   const dispatch = useDispatch();
   const { number } = useParams();
 
@@ -84,5 +84,5 @@ export const OrderInfo: FC = () => {
     return <Preloader />;
   }
 
-  return <OrderInfoUI orderInfo={orderInfo} />;
+  return <OrderInfoUI orderInfo={orderInfo} isModal={isModal} />;
 };

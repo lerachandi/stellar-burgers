@@ -75,3 +75,8 @@
 .total {
   margin-left: auto;
 }
+
+.numberModal {
+  padding-top: 0;
+  text-align: left;
+}
