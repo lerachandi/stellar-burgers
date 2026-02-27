@@ -8,6 +8,8 @@ import reducer, {
 } from './userSlice';
 
 describe('userSlice', () => {
+  const user = { email: 'pomogi@te.ru', name: 'test' };
+
   it('начальное состояние', () => {
     const state = reducer(undefined, { type: 'UNKNOWN_ACTION' });
 
@@ -19,14 +21,14 @@ describe('userSlice', () => {
     });
   });
 
-  it('checkUserAuth.pending: начало загрузки и сброс ошикби', () => {
+  it('checkUserAuth: начало загрузки и сброс ошибки', () => {
     const state = reducer(undefined, { type: checkUserAuth.pending.type });
 
     expect(state.isLoading).toBe(true);
     expect(state.error).toBeNull();
   });
 
-  it('checkUserAuth.fulfilled: ставит isAuthChecked=true и завершает загрузку', () => {
+  it('checkUserAuth: ставит isAuthChecked=true и завершает загрузку', () => {
     const state = reducer(undefined, {
       type: checkUserAuth.fulfilled.type,
       payload: null
@@ -36,36 +38,32 @@ describe('userSlice', () => {
     expect(state.isLoading).toBe(false);
   });
 
-  it('loginUserThunk.fulfilled: сохранение пользователя', () => {
-    const payload = { email: 'pomogi@te.ru', name: 'test' };
-
+  it('loginUserThunk: сохраняет пользователя', () => {
     const state = reducer(undefined, {
       type: loginUserThunk.fulfilled.type,
-      payload
+      payload: user
     });
 
-    expect(state.user).toEqual(payload);
+    expect(state.user).toEqual(user);
     expect(state.isAuthChecked).toBe(true);
     expect(state.isLoading).toBe(false);
   });
 
-  it('registerUserThunk.fulfilled: сохранение пользователя', () => {
-    const payload = { email: 'pomogi@te.ru', name: 'test' };
-
+  it('registerUserThunk: сохраняет пользователя', () => {
     const state = reducer(undefined, {
       type: registerUserThunk.fulfilled.type,
-      payload
+      payload: user
     });
 
-    expect(state.user).toEqual(payload);
+    expect(state.user).toEqual(user);
     expect(state.isAuthChecked).toBe(true);
     expect(state.isLoading).toBe(false);
   });
 
-  it('logoutThunk.fulfilled: очищает пользователя', () => {
+  it('logoutThunk: очищает пользователя', () => {
     const loggedIn = reducer(undefined, {
       type: loginUserThunk.fulfilled.type,
-      payload: { email: 'pomogi@te.ru', name: 'test' }
+      payload: user
     });
 
     const state = reducer(loggedIn, { type: logoutThunk.fulfilled.type });
@@ -74,25 +72,23 @@ describe('userSlice', () => {
     expect(state.isAuthChecked).toBe(true);
   });
 
-  it('getUserThunk.fulfilled: обновляет пользователя', () => {
-    const payload = { email: 'pomogi@te.ru', name: 'test' };
-
+  it('getUserThunk: обновляет пользователя', () => {
     const state = reducer(undefined, {
       type: getUserThunk.fulfilled.type,
-      payload
+      payload: user
     });
 
-    expect(state.user).toEqual(payload);
+    expect(state.user).toEqual(user);
   });
 
-  it('updateUserThunk.fulfilled: обновляет пользователя', () => {
-    const payload = { email: 'pomogi@te.ru', name: 'updated' };
+  it('updateUserThunk: обновляет пользователя', () => {
+    const updatedUser = { email: 'pomogi@te.ru', name: 'updated' };
 
     const state = reducer(undefined, {
       type: updateUserThunk.fulfilled.type,
-      payload
+      payload: updatedUser
     });
 
-    expect(state.user).toEqual(payload);
+    expect(state.user).toEqual(updatedUser);
   });
 });

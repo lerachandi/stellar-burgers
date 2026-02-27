@@ -35,3 +35,38 @@
 //     }
 //   }
 // }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      interceptIngredients(): Chainable<void>;
+      interceptUnauthorizedUser(): Chainable<void>;
+      setAuthTokens(): Chainable<void>;
+      clearAuthTokens(): Chainable<void>;
+    }
+  }
+}
+
+Cypress.Commands.add('interceptIngredients', () => {
+  cy.intercept('GET', '**/ingredients', { fixture: 'ingredients.json' });
+});
+
+Cypress.Commands.add('interceptUnauthorizedUser', () => {
+  cy.intercept('GET', '**/auth/user', { statusCode: 401 });
+});
+
+Cypress.Commands.add('setAuthTokens', () => {
+  cy.setCookie('accessToken', 'Bearer test-access-token');
+  cy.window().then((win) => {
+    win.localStorage.setItem('refreshToken', 'test-refresh-token');
+  });
+});
+
+Cypress.Commands.add('clearAuthTokens', () => {
+  cy.clearCookie('accessToken');
+  cy.window().then((win) => {
+    win.localStorage.removeItem('refreshToken');
+  });
+});
+
+export {};

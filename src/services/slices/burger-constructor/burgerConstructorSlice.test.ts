@@ -35,21 +35,31 @@ describe('burgerConstructorSlice', () => {
     image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png'
   };
 
-  it('добавление булки в конструктор', () => {
+  const createStateWithTwoMains = () => {
+    let state = reducer(undefined, addIngredient(mainIngredient));
+    state = reducer(state, addIngredient(mainIngredient));
+
+    const firstId = state.ingredients[0].id;
+    const secondId = state.ingredients[1].id;
+
+    return { state, firstId, secondId };
+  };
+
+  it('добавляет булку в конструктор', () => {
     const state = reducer(undefined, addIngredient(bun));
 
     expect(state.bun).toEqual(bun);
     expect(state.ingredients).toHaveLength(0);
   });
 
-  it('добавление ингредиента в список', () => {
+  it('добавляет начинку в список ингредиентов', () => {
     const state = reducer(undefined, addIngredient(mainIngredient));
 
     expect(state.ingredients).toHaveLength(1);
     expect(state.ingredients[0]).toMatchObject(mainIngredient);
   });
 
-  it('удаление ингредиента по id', () => {
+  it('удаляет ингредиент по id', () => {
     const state = reducer(undefined, addIngredient(mainIngredient));
     const idToRemove = state.ingredients[0].id;
 
@@ -58,27 +68,8 @@ describe('burgerConstructorSlice', () => {
     expect(updatedState.ingredients).toHaveLength(0);
   });
 
-  it('перемещение ингредиентов', () => {
-    let state = reducer(undefined, addIngredient(mainIngredient));
-    state = reducer(state, addIngredient(mainIngredient));
-
-    const firstId = state.ingredients[0].id;
-    const secondId = state.ingredients[1].id;
-
-    const movedState = reducer(
-      state,
-      moveIngredient({ fromIndex: 0, toIndex: 1 })
-    );
-
-    expect(movedState.ingredients[0].id).toBe(secondId);
-    expect(movedState.ingredients[1].id).toBe(firstId);
-  });
   it('перемещает начинку вниз', () => {
-    let state = reducer(undefined, addIngredient(mainIngredient));
-    state = reducer(state, addIngredient(mainIngredient));
-
-    const firstId = state.ingredients[0].id;
-    const secondId = state.ingredients[1].id;
+    const { state, firstId, secondId } = createStateWithTwoMains();
 
     const movedState = reducer(
       state,
@@ -90,11 +81,7 @@ describe('burgerConstructorSlice', () => {
   });
 
   it('перемещает начинку вверх', () => {
-    let state = reducer(undefined, addIngredient(mainIngredient));
-    state = reducer(state, addIngredient(mainIngredient));
-
-    const firstId = state.ingredients[0].id;
-    const secondId = state.ingredients[1].id;
+    const { state, firstId, secondId } = createStateWithTwoMains();
 
     const movedState = reducer(
       state,
@@ -106,9 +93,7 @@ describe('burgerConstructorSlice', () => {
   });
 
   it('не перемещает первый ингредиент вверх (граничный случай)', () => {
-    let state = reducer(undefined, addIngredient(mainIngredient));
-    state = reducer(state, addIngredient(mainIngredient));
-
+    const { state } = createStateWithTwoMains();
     const beforeIds = state.ingredients.map((item) => item.id);
 
     const movedState = reducer(
@@ -121,9 +106,7 @@ describe('burgerConstructorSlice', () => {
   });
 
   it('не перемещает последний ингредиент вниз (граничный случай)', () => {
-    let state = reducer(undefined, addIngredient(mainIngredient));
-    state = reducer(state, addIngredient(mainIngredient));
-
+    const { state } = createStateWithTwoMains();
     const lastIndex = state.ingredients.length - 1;
     const beforeIds = state.ingredients.map((item) => item.id);
 
@@ -136,7 +119,7 @@ describe('burgerConstructorSlice', () => {
     expect(afterIds).toEqual(beforeIds);
   });
 
-  it('очищеие конструктора', () => {
+  it('очищает конструктор', () => {
     let state = reducer(undefined, addIngredient(bun));
     state = reducer(state, addIngredient(mainIngredient));
 
